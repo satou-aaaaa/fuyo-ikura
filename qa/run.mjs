@@ -59,7 +59,7 @@ const OKSRC = /^https:\/\/www\.nta\.go\.jp\/taxes\/shiraberu\/taxanswer\/(shotok
       if (!Number.isInteger(P.A) || !Number.isInteger(P.W) || P.A <= 0 || P.W < 0) why.push("年齢・金額が整数でない");
       if (!P.src.length || P.src.some((x) => !Array.isArray(x) || !OKSRC.test(x[1]))) why.push("出典が無い・国税庁のページでない");
       if (JSON.stringify(G.make(`${k.id}|qa${s}`)) !== JSON.stringify(P)) why.push("同じ種で同じ問題にならない");
-      seen[k.id].add(G.keyOf(P));
+      seen[k.id].add(P.v); // 金額の組で数える（選び肢の並びが変わるだけでは別の問題にしない。CodeRabbit haigusha-ikura#1）
       if (why.length && !bad[k.id]) bad[k.id] = why.join("・") + "：" + P.q + " " + P.opts.join(" / ");
     }
   }
